@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/docker/docker.iml" filepath="$PROJECT_DIR$/docker/docker.iml" />
       <module fileurl="file://$PROJECT_DIR$/j2ee/j2ee.iml" filepath="$PROJECT_DIR$/j2ee/j2ee.iml" />
+      <module fileurl="file://$PROJECT_DIR$/j2ee/j2ee.iml" filepath="$PROJECT_DIR$/j2ee/j2ee.iml" />
       <module fileurl="file://$PROJECT_DIR$/me-chat.iml" filepath="$PROJECT_DIR$/me-chat.iml" />
     </modules>
   </component>
