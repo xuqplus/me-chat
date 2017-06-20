@@ -1,10 +1,7 @@
-FROM centos:6.8
+FROM daocloud.io/library/maven:3.5.0
 MAINTAINER xuqplus <445172495@qq.com>
 
-ADD source/get-pip.py /tmp
-RUN python /tmp/get-pip.py
-
-ADD source/maven.repo /etc/yum.repos.d
-RUN yum install -y java apache-maven
+RUN apt update
+RUN apt install supervisor -y
 
 CMD /bin/bash
