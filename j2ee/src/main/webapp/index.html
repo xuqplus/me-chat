@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ws测试</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/mqttws31.min.js"></script>
+</head>
+<body>
+<div class="container">
+</div>
+<script>
+
+    $(document).ready(function(){
+        function onConnect(){
+            console.log('connected ..')
+            mosq.subscribe('#')
+            mosq.send('话题', '消息', 2)
+        }
+        function onConnectionLost(responseObject){
+            if (responseObject.errorCode !== 0) {
+              console.log("onConnectionLost:" + responseObject.errorMessage);
+              mosq.connect({onSuccess:onConnect});
+            }
+        }
+        function onMessageArrived(message){
+            //console.log(message)
+            console.log('topic-->' + message.destinationName)
+            console.log('payload-->' + message.payloadString)
+        }
+        var mosq = new Paho.MQTT.Client('172.17.0.3', 1884, '', 'clientId' + new Date().getTime())
+        mosq.onConnectionLost = onConnectionLost
+        mosq.onMessageArrived = onMessageArrived
+        mosq.connect({onSuccess:onConnect, userName:'root', password:'root', useSSL:false})
+    })
+
+
+</script>
+</body>
+</html>
