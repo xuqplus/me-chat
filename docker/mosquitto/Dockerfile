@@ -1,9 +1,14 @@
 FROM centos:7
 MAINTAINER xuqplus <445172495@qq.com>
 
-RUN yum install -y epel-release mosquitto
+ADD source/get-pip.py /tmp
+RUN python /tmp/get-pip.py
+RUN pip install supervisor
 
-ADD certs /etc/mosquitto
+RUN yum install epel-release -y
+RUN yum install mosquitto -y
+
 ADD conf/mosquitto.conf /etc/mosquitto
+ADD conf/supervisord.conf /etc
 
-CMD /usr/bin/python /usr/bin/supervisord
+CMD /usr/bin/python /usr/bin/supervisord -c /etc/supervisord.conf
