@@ -11,4 +11,6 @@ RUN yum install mosquitto -y
 ADD conf/mosquitto.conf /etc/mosquitto
 ADD conf/supervisord.conf /etc
 
+EXPOSE 1883 1884
+
 CMD /usr/bin/python /usr/bin/supervisord -c /etc/supervisord.conf
