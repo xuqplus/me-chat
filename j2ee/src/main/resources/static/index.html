@@ -9,14 +9,29 @@
 </head>
 <body>
 <div class="container">
+    <input id="say">
+    <button id="send">发送</button>
+    <div id="msg">
+    </div>
 </div>
 <script>
-
     $(document).ready(function(){
+        $('#say').keydown(function(e){
+            if(e.key == 'Enter' || e.keyCode == 13){
+                $('#send').click()
+            }
+        })
+        $('#send').click(function(){
+            if($('#say').val() != ''){
+                mosq.send(mosq.clientId + '说', $('#say').val(), 2)
+                $('#say').val('')
+            }
+        })
         function onConnect(){
             console.log('connected ..')
             mosq.subscribe('#')
-            mosq.send('话题', '消息', 2)
+            //mosq.send(mosq.clientId + '说', '消息', 2)
+            //console.log(mosq)
         }
         function onConnectionLost(responseObject){
             if (responseObject.errorCode !== 0) {
@@ -26,14 +41,25 @@
         }
         function onMessageArrived(message){
             //console.log(message)
-            console.log('topic-->' + message.destinationName)
-            console.log('payload-->' + message.payloadString)
+            //console.log('topic-->' + message.destinationName)
+            //console.log('payload-->' + message.payloadString)
+            if(message.destinationName.indexOf(mosq.clientId) >= 0){
+                $('#msg').append('我说:' + message.payloadString + '<br>')
+            }else{
+                $('#msg').append(message.destinationName + ':' + message.payloadString + '<br>')
+            }
         }
-        var mosq = new Paho.MQTT.Client('172.17.0.3', 1884, '', 'clientId' + new Date().getTime())
+        var mosq = new Paho.MQTT.Client('server.ngrok.cc', 61884, '', '用户' + new Date().getTime())
         mosq.onConnectionLost = onConnectionLost
         mosq.onMessageArrived = onMessageArrived
         mosq.connect({onSuccess:onConnect, userName:'root', password:'root', useSSL:false})
     })
+
+
+
+
+
+
 
 
 </script>
