@@ -1,4 +1,4 @@
-FROM daocloud.io/library/maven:3.5.0
+FROM daocloud.io/library/centos:6.8
 MAINTAINER xuqplus <445172495@qq.com>
 
 RUN apt update

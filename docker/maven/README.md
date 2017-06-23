@@ -1,6 +1,1 @@
-使用daocloud.io提供的maven镜像
-克隆github上的本项目
-构建项目的target jar文件
-构建一个项目交付的docker镜像
-部署镜像,容器端口暴露在内网上
-能过ngrok.cc的反向代理服务,将web应用发布至公网
+构建maven基础镜像
