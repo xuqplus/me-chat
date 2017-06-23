@@ -1,14 +1,9 @@
 FROM daocloud.io/library/centos:6.8
 MAINTAINER xuqplus <445172495@qq.com>
 
-RUN apt update
-RUN apt install supervisor -y
+RUN yum install -y java-1.8.0-openjdk.x86_64 java-1.8.0-openjdk-devel.x86_64
 
-RUN git clone https://github.com/xuqplus/me-chat.git
-RUN mkdir /tmp/build && cp /me-chat/j2ee/pom.xml /tmp/build && cd /tmp/build && mvn dependency:resolve
-RUN cp -r /me-chat/j2ee/src /tmp/build && cd /tmp/build && mvn -DskipTests=true package
-RUN cp /tmp/build/target/*.jar /app.jar && rm -rf /tmp/build /me-chat
+ADD source/apache-maven-3.5.0-bin.tar.gz /usr/share
+ENV PATH /usr/share/apache-maven-3.5.0/bin:$PATH
 
-EXPOSE 80 8080
-
-CMD java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+CMD /bin/bash
