@@ -6,7 +6,7 @@ RUN apt install supervisor -y
 
 ADD /j2ee/ /tmp/build/
 RUN cd /tmp/build/ && mvn package
-RUN cp /tmp/build/src/target/*.jar /app.jar && rm -rf /tmp/build/
+RUN cp /tmp/build/target/*.jar /app.jar && rm -rf /tmp/build/
 
 ADD /docker/web/conf/supervisord.conf /etc/
 
