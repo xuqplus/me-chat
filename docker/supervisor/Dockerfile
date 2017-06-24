@@ -1,7 +1,7 @@
 FROM centos:6.8
 MAINTAINER xuqplus <445172495@qq.com>
 
-ADD source/get-pip.py /tmp
+ADD /source/get-pip.py /tmp/
 RUN python /tmp/get-pip.py
 RUN pip install supervisor
 
