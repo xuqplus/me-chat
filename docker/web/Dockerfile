@@ -6,8 +6,7 @@ RUN apt install supervisor -y
 
 ADD j2ee/src /
 ADD j2ee/pom.xml /
-RUN mvn dependency:resolve
-RUN mvn -DskipTests=true package
+RUN cd / && mvn dependency:resolve && mvn -DskipTests=true package
 RUN cp /src/target/*.jar /app.jar && rm -rf /src /pom.xml
 
 ADD docker/web/conf/supervisord.conf /etc/
