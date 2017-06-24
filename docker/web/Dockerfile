@@ -4,10 +4,11 @@ MAINTAINER xuqplus <445172495@qq.com>
 RUN apt update
 RUN apt install supervisor -y
 
-RUN git clone https://github.com/xuqplus/me-chat.git
-RUN mkdir /tmp/build && cp /me-chat/j2ee/pom.xml /tmp/build && cd /tmp/build && mvn dependency:resolve
-RUN cp -r /me-chat/j2ee/src /tmp/build && cd /tmp/build && mvn -DskipTests=true package
-RUN cp /tmp/build/target/*.jar /app.jar && rm -rf /tmp/build /me-chat
+ADD j2ee/src /
+ADD j2ee/pom.xml /
+RUN mvn dependency:resolve
+RUN mvn -DskipTests=true package
+RUN cp /src/target/*.jar /app.jar && rm -rf /src /pom.xml
 
 ADD conf/supervisord.conf /etc/
 
