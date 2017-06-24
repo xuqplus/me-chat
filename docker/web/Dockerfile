@@ -10,7 +10,7 @@ RUN mvn dependency:resolve
 RUN mvn -DskipTests=true package
 RUN cp /src/target/*.jar /app.jar && rm -rf /src /pom.xml
 
-ADD conf/supervisord.conf /etc/
+ADD docker/web/conf/supervisord.conf /etc/
 
 EXPOSE 8080
 
