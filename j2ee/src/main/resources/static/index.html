@@ -49,7 +49,7 @@
                 $('#msg').append(message.destinationName + ':' + message.payloadString + '<br>')
             }
         }
-        var mosq = new Paho.MQTT.Client('message.t2.daoapp.io', 61060, '', '用户' + new Date().getTime())
+        var mosq = new Paho.MQTT.Client('message.t2.daoapp.io', 61118, '', '用户' + new Date().getTime())
         mosq.onConnectionLost = onConnectionLost
         mosq.onMessageArrived = onMessageArrived
         mosq.connect({onSuccess:onConnect, userName:'root', password:'root', useSSL:false})
