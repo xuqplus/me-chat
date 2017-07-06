@@ -6,16 +6,29 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/mqttws31.min.js"></script>
+    <script src="js/index.js"></script>
 </head>
 <body>
 <div class="container">
     <input id="say">
     <button id="send">发送</button>
+    <button id="settings">设置</button>
     <div id="msg">
     </div>
 </div>
 <script>
+    var index = {}
+    index.user_id = "user_id_" + new Date().getTime()
+    //查看cookie中是否记录了"user_name"
+    index.user_name = getCookie("user_name") || index.user_id
+    index.mqtt = {}
+    index.mqtt.domain = "message.t2.daoapp.io"
+    index.mqtt.port = 61118
+
     $(document).ready(function(){
+        $('#settings').click(function(){
+            window.open("index.settings.html", "", "width=200px,height=200px;", false)
+        })
         $('#say').keydown(function(e){
             if(e.key == 'Enter' || e.keyCode == 13){
                 $('#send').click()
@@ -23,39 +36,43 @@
         })
         $('#send').click(function(){
             if($('#say').val() != ''){
-                mosq.send(mosq.clientId + '说', $('#say').val(), 2)
+                //发送的消息为json字符串
+                var payload = {}
+                payload.user_id = index.user_id
+                payload.user_name = index.user_name
+                payload.message = $('#say').val()
+                payload = JSON.stringify(payload)
+                client.send('message', payload, 2)
                 $('#say').val('')
             }
         })
         function onConnect(){
             console.log('connected ..')
-            mosq.subscribe('#')
-            //mosq.send(mosq.clientId + '说', '消息', 2)
-            //console.log(mosq)
+            client.subscribe('#')
         }
         function onConnectionLost(responseObject){
             if (responseObject.errorCode !== 0) {
               console.log("onConnectionLost:" + responseObject.errorMessage);
-              mosq.connect({onSuccess:onConnect});
+              client.connect({onSuccess:onConnect});
             }
         }
         function onMessageArrived(message){
-            //console.log(message)
             //console.log('topic-->' + message.destinationName)
             //console.log('payload-->' + message.payloadString)
-            if(message.destinationName.indexOf(mosq.clientId) >= 0){
-                $('#msg').append('我说:' + message.payloadString + '<br>')
+
+            var payload = $.parseJSON(message.payloadString)
+            //判断消息是为是自己发送的，显示<我>
+            if(payload.user_id == index.user_id){
+                $('#msg').prepend('我：' + payload.message + '<br>')
             }else{
-                $('#msg').append(message.destinationName + ':' + message.payloadString + '<br>')
+                $('#msg').prepend(payload.user_name + '：' + payload.message + '<br>')
             }
         }
-        var mosq = new Paho.MQTT.Client('message.t2.daoapp.io', 61118, '', '用户' + new Date().getTime())
-        mosq.onConnectionLost = onConnectionLost
-        mosq.onMessageArrived = onMessageArrived
-        mosq.connect({onSuccess:onConnect, userName:'root', password:'root', useSSL:false})
+        var client = new Paho.MQTT.Client(index.mqtt.domain, index.mqtt.port, '', index.user_id)
+        client.onConnectionLost = onConnectionLost
+        client.onMessageArrived = onMessageArrived
+        client.connect({onSuccess:onConnect, userName:'root', password:'root', useSSL:false})
     })
-
-
 
 
 

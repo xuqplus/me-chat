@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<div class="container">
+    用户名：<input id="user_name">
+    <button id="enter">确认</button>
+</div>
+<script>
+    var index = window.opener.index || {}
+
+    $(document).ready(function(){
+        //设置用户名并保存到cookie
+        $('#enter').click(function(){
+            if($('#user_name').val() != ''){
+                index.user_name = $('#user_name').val()
+                $('.container')[0].append('设置成功！')
+                setTimeout(function(){
+                    setCookie("user_name", $('#user_name').val(), 100)
+                    window.close()
+                }, 700)
+            }
+        })
+        //Escape键关闭窗口
+        $(window).keydown(function(e){
+            console.log(e)
+            if(e.key == "escape" || e.keyCode == 27){
+                window.close()
+            }
+            if(e.key == "Enter" || e.keyCode == 13){
+                $('#enter').click()
+            }
+        })
+    })
+
+</script>
+</body>
+</html>
