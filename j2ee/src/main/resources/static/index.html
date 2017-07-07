@@ -12,6 +12,7 @@
 <div class="container">
     <input id="say">
     <button id="send">发送</button>
+    <button id="clear">清屏</button>
     <button id="settings">设置</button>
     <div id="msg">
     </div>
@@ -46,6 +47,9 @@
                 $('#say').val('')
             }
         })
+        $('#clear').click(function(){
+        $('#msg').html('');
+        });
         function onConnect(){
             console.log('connected ..')
             client.subscribe('#')
