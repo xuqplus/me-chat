@@ -22,9 +22,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <mysql.url>mysql.xuqplus.space</mysql.url>
+        <mysql.url>db2.daocloudinternal.io</mysql.url>
+        <mysql.port>60064</mysql.port>
         <mysql.password>root</mysql.password>
-        <mysql.username>wayout</mysql.username>
+        <mysql.username>E2ZsNQB1S</mysql.username>
+        <mysql.db>mydb</mysql.db>
     </properties>
 
     <dependencies>
