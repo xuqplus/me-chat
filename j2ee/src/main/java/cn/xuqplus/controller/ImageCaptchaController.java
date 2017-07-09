@@ -45,8 +45,11 @@ public class ImageCaptchaController {
 
 
     @RequestMapping("/captcha")
-    public void imageCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<String, Object> map = ImageCaptcha.getImageCaptcha(75, 25);
+    public void imageCaptcha(
+            @RequestParam Integer fontSize,
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        Map<String, Object> map = ImageCaptcha.getImageCaptcha(null == fontSize ? 25 : fontSize);
         request.getSession().setAttribute("captcha.str", map.get("captcha.str").toString().toLowerCase());
         request.getSession().setAttribute("captcha.time", new Date().getTime());
         ImageIO.write((BufferedImage) map.get("captcha.image"), "JPEG", response.getOutputStream());
