@@ -77,4 +77,7 @@ public class User {
         this.account_state = account_state;
         this.login_state = login_state;
     }
+
+    public User() {
+    }
 }
