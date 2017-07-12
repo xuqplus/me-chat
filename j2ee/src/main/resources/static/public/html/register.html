@@ -21,13 +21,13 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin">
+    <form method="post" action="/api/public/register" onsubmit="return register.register()" class="form-signin">
         <h2 class="form-signin-heading">注册信息</h2>
-        <input type="text" id="inputUsername" class="form-control" placeholder="用户名" required="" autofocus="">
-        <input type="email" id="inputEmail" class="form-control" placeholder="邮箱" required="">
-        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="">
-        <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="密码确认" required="">
-        <input type="text" id="inputCaptcha" class="form-control" placeholder="验证码" required="">
+        <input type="text" name="user_id" class="form-control" placeholder="用户名" required="" autofocus="">
+        <input type="email" name="user_name" class="form-control" placeholder="邮箱" required="">
+        <input type="password" id="user_password" class="form-control" placeholder="密码" required="">
+        <input type="password" id="user_password2" name="user_password" class="form-control" placeholder="密码确认" required="">
+        <input type="text" name="captcha_value" class="form-control" placeholder="验证码" required="" autocomplete="off">
         <div class="form-captcha">
             <img src="/api/public/captcha?fontSize=40">
             <a href="">刷新图片</a>
@@ -40,5 +40,17 @@
 <script src="../js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.min.js"></script>
+<script>
+    var register = {}
+    register.register = function(){
+        console.log($('#user_password').val())
+        console.log($('#user_password2').val())
+        if($('#user_password').val() == $('#user_password2').val()){
+            return true
+        } else {
+            return false
+        }
+    }
+</script>
 </body>
 </html>

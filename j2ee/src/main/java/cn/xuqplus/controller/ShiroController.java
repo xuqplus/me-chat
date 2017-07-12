@@ -2,9 +2,11 @@ package cn.xuqplus.controller;
 
 import cn.xuqplus.domain.Captcha;
 import cn.xuqplus.domain.User;
+import cn.xuqplus.mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +23,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/public")
 public class ShiroController {
+    @Autowired
+    private UserMapper userMapper;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(
             @ModelAttribute("user") User user,
@@ -35,7 +40,7 @@ public class ShiroController {
         Map map = Captcha.check(request, captcha);
         request.getSession().removeAttribute("captcha");
         if (!(boolean) map.get("success")) {
-            mav.setViewName("redirect:/public/html//login.html");
+            mav.setViewName("redirect:/public/html/login.html");
             return mav;
         }
         /**
@@ -47,7 +52,7 @@ public class ShiroController {
         try {
             subject.login(token);
         } catch (Exception e) {
-            mav.setViewName("redirect:/public/html//login.html");
+            mav.setViewName("redirect:/public/html/login.html");
             return mav;
         }
         mav.setViewName("redirect:/index.html");
@@ -60,6 +65,40 @@ public class ShiroController {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         mav.setViewName("redirect:/public/html/login.html");
+        return mav;
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ModelAndView register(
+            @ModelAttribute("user") User user,
+            @ModelAttribute("captcha") Captcha captcha,
+            HttpServletRequest request
+    ) {
+        ModelAndView mav = new ModelAndView();
+        /**
+         * 检查验证码
+         */
+        captcha.setCaptcha_time(new Date().getTime());
+        Map map = Captcha.check(request, captcha);
+        request.getSession().removeAttribute("captcha");
+        if (!(boolean) map.get("success")) {
+            mav.setViewName("redirect:/public/html/register.html");
+            return mav;
+        }
+        /**
+         * 注册新用户
+         */
+        try {
+            userMapper.insertUser(
+                    user.getUser_id(),
+                    user.getUser_name(),
+                    user.getUser_email(),
+                    user.getUser_password()
+            );
+            mav.setViewName("redirect:/public/html/login.html");
+        } catch (Exception e) {
+            mav.setViewName("redirect:/public/html/register.html");
+        }
         return mav;
     }
 }
