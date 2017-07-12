@@ -23,11 +23,11 @@
 
 <div class="container">
 
-    <form class="form-signin">
+    <form method="post" action="/api/login" onsubmit="return login.login()" class="form-signin">
         <h2 class="form-signin-heading">登录</h2>
-        <input type="email" id="inputEmail" class="form-control" placeholder="用户名/邮箱" required="" autofocus="">
-        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="">
-        <input type="text" id="inputCaptcha" class="form-control" placeholder="验证码" required="">
+        <input type="email" name="user_email" class="form-control" placeholder="邮箱" required="" autofocus="">
+        <input type="password" name="user_password" class="form-control" placeholder="密码" required="">
+        <input type="text" name="captcha_value" class="form-control" placeholder="验证码" required="" autocomplete="off">
         <div class="form-captcha">
             <img src="/api/captcha?fontSize=40">
         </div>
@@ -40,5 +40,17 @@
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
+<script>
+    var login = {}
+    login.login = function(){
+        console.log("login.login")
+        return true
+    }
+
+
+
+
+
+</script>
 </body>
 </html>
