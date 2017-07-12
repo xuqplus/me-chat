@@ -33,6 +33,7 @@ public class ShiroController {
             HttpServletRequest request
     ) {
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/public/html/dashboard.html");
         /**
          * 检查验证码
          */
@@ -40,7 +41,6 @@ public class ShiroController {
         Map map = Captcha.check(request, captcha);
         request.getSession().removeAttribute("captcha");
         if (!(boolean) map.get("success")) {
-            mav.setViewName("redirect:/public/html/login.html");
             return mav;
         }
         /**
@@ -52,10 +52,7 @@ public class ShiroController {
         try {
             subject.login(token);
         } catch (Exception e) {
-            mav.setViewName("redirect:/public/html/login.html");
-            return mav;
         }
-        mav.setViewName("redirect:/index.html");
         return mav;
     }
 
@@ -75,14 +72,14 @@ public class ShiroController {
             HttpServletRequest request
     ) {
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/public/html/register.html");
         /**
-         * 检查验证码
-         */
+              * 检查验证码
+              */
         captcha.setCaptcha_time(new Date().getTime());
         Map map = Captcha.check(request, captcha);
         request.getSession().removeAttribute("captcha");
         if (!(boolean) map.get("success")) {
-            mav.setViewName("redirect:/public/html/register.html");
             return mav;
         }
         /**
@@ -97,7 +94,6 @@ public class ShiroController {
             );
             mav.setViewName("redirect:/public/html/login.html");
         } catch (Exception e) {
-            mav.setViewName("redirect:/public/html/register.html");
         }
         return mav;
     }
