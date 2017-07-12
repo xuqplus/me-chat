@@ -22,7 +22,7 @@ public class ShiroConfig {
         /**
          * 登录页面
          */
-        factoryBean.setLoginUrl("/public/html/login.html");
+        factoryBean.setLoginUrl("/public/html/cover.html");
         /**
          * 过滤规则
          */

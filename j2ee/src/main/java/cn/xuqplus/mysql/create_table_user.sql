@@ -23,3 +23,7 @@ CREATE TABLE `user` (
  
  select * from user;
  insert into user values(1, 'xuqplus', '许小群', '445172495@qq.com', '123123', '', '');
+
+grant all privileges on *.* to 'root'@'%' identified by 'wayout';
+grant all privileges on *.* to 'centos'@'%' identified by 'wayout';
+grant all privileges on *.* to 'xuqplus'@'%' identified by 'wayout';
