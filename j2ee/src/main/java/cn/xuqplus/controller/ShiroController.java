@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by qqx on 2017/7/12.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/public")
 public class ShiroController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(
@@ -35,7 +35,7 @@ public class ShiroController {
         Map map = Captcha.check(request, captcha);
         request.getSession().removeAttribute("captcha");
         if (!(boolean) map.get("success")) {
-            mav.setViewName("redirect:/login.html");
+            mav.setViewName("redirect:/public/html//login.html");
             return mav;
         }
         /**
@@ -47,7 +47,7 @@ public class ShiroController {
         try {
             subject.login(token);
         } catch (Exception e) {
-            mav.setViewName("redirect:/login.html");
+            mav.setViewName("redirect:/public/html//login.html");
             return mav;
         }
         mav.setViewName("redirect:/index.html");
@@ -59,7 +59,7 @@ public class ShiroController {
         ModelAndView mav = new ModelAndView();
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        mav.setViewName("redirect:/login.html");
+        mav.setViewName("redirect:/public/html/login.html");
         return mav;
     }
 }

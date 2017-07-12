@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by Administrator on 2017-06-20.
  */
 @RestController
-@RequestMapping("/api/demo")
+@RequestMapping("/api/public/demo")
 public class DemoController {
     @Autowired
     private UserMapper userMapper;

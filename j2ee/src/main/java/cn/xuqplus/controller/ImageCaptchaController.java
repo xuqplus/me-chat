@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by qqx on 2017/7/8.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/public")
 public class ImageCaptchaController {
     @RequestMapping("/captcha")
     public void imageCaptcha(

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ws测试</title>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/mqttws31.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="public/js/jquery.min.js"></script>
+    <script src="public/js/bootstrap.min.js"></script>
+    <script src="public/js/mqttws31.min.js"></script>
+    <script src="public/js/index.js"></script>
     <style>
     #send{color:white;background-color:#b3d9d9}
     h1{color:white;background-color:#b3d9d9;border:1px dotted white;text-align:center}
@@ -83,12 +83,6 @@
         client.onMessageArrived = onMessageArrived
         client.connect({onSuccess:onConnect, userName:'root', password:'root', useSSL:false})
     })
-
-
-
-
-
-
 </script>
 </body>
 </html>
